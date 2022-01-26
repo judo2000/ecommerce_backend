@@ -33,7 +33,7 @@ router.get('/:id', async (req, res) => {
         include: [
           {
             model: Product,
-            attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
+            attributes: ['id', 'product_name', 'price', 'stock']
           },
         ],
       }
@@ -46,11 +46,14 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   // create a new category
+  // get category name entered by the user
   const { category_name } = req.body;
   try {
+    // create new category
     const newCategory = await Category.create({
       category_name
     });
+    // display newly created category 
     res.json(newCategory);
   } catch (error) {
     res.json(error);
@@ -87,11 +90,13 @@ router.delete('/:id', async (req, res) => {
     // get the category to be deleted so we can display it after it
     // gets deleted
     const deletedCategory = await Category.findByPk(req.params.id);
+    // delete the selected category
     await Category.destroy({
       where: {
         id: req.params.id,
       },
-    })
+    });
+    // display the deleted category
     res.json(deletedCategory);
   } catch (error) {
     res.json(error);
