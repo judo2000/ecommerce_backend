@@ -21,13 +21,28 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   // find one category by its `id` value
   // be sure to include its associated Products
+  try {
+    const category = await Category.findByPk(req.params.id);
+    res.json(category);
+  } catch (error) {
+    res.json(error);
+  }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   // create a new category
+  const { category_name } = req.body;
+  try {
+    const newCategory = await Category.create({
+      category_name
+    });
+    res.json(newCategory);
+  } catch (error) {
+    res.json(error);
+  }
 });
 
 router.put('/:id', (req, res) => {
