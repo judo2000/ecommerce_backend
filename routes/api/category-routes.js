@@ -15,8 +15,10 @@ router.get('/', async (req, res) => {
         },
       ],
     })
+    // display categories
     res.json(categories);
   } catch (error) {
+    // display errors if any
     res.json(error);
   }
 });
@@ -38,8 +40,10 @@ router.get('/:id', async (req, res) => {
         ],
       }
     );
+    // display category
     res.json(category);
   } catch (error) {
+    // display errors if any
     res.json(error);
   }
 });
@@ -56,16 +60,18 @@ router.post('/', async (req, res) => {
     // display newly created category 
     res.json(newCategory);
   } catch (error) {
+    // display errors if any
     res.json(error);
   }
 });
 
 router.put('/:id', async (req, res) => {
   // update a category by its `id` value
-  // get category_name from the form
+  // get category_name to be updated
   const { category_name } = req.body;
 
   try {
+    // update category
     await Category.update(
       { category_name },
       {
@@ -79,6 +85,7 @@ router.put('/:id', async (req, res) => {
     // display updated category
     res.json(category);
   } catch (error) {
+    // display errors if any
     res.json(error);
   }
 
@@ -99,6 +106,7 @@ router.delete('/:id', async (req, res) => {
     // display the deleted category
     res.json(deletedCategory);
   } catch (error) {
+    // display errors if any
     res.json(error);
   }
 });

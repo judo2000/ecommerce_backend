@@ -13,6 +13,10 @@ router.get('/', async (req, res) => {
         {
           model: Category,
           attributes: ['category_name'],
+        },
+        {
+          model: Tag,
+          attributes: ['tag_name']
         }
       ],
     })
@@ -23,9 +27,34 @@ router.get('/', async (req, res) => {
 });
 
 // get one product
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
+  try {
+    const product = await Product.findByPk(
+      // find the product by it's primary key
+      reg.params.id,
+      {
+        // include the category association
+        include: [
+          {
+            model: Category,
+            attributes: ['id', 'category_name']
+          },
+          // include the tag association
+          {
+            model: Tag,
+            attributes: ['tag_name']
+          }
+        ]
+      }
+    );
+    // display product
+    res.json(product);
+  } catch (error) {
+    // display errors if any
+    res.json(error);
+  }
 });
 
 // create new product
