@@ -25,7 +25,19 @@ router.get('/:id', async (req, res) => {
   // find one category by its `id` value
   // be sure to include its associated Products
   try {
-    const category = await Category.findByPk(req.params.id);
+    const category = await Category.findByPk(
+      // find the category by it's primary key
+      req.params.id,
+      // include the associated products
+      {
+        include: [
+          {
+            model: Product,
+            attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
+          },
+        ],
+      }
+    );
     res.json(category);
   } catch (error) {
     res.json(error);
@@ -45,12 +57,45 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   // update a category by its `id` value
+  // get category_name from the form
+  const { category_name } = req.body;
+
+  try {
+    await Category.update(
+      { category_name },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    )
+    // get the updated category by it's primary key
+    const category = await Category.findByPk(req.params.id);
+    // display updated category
+    res.json(category);
+  } catch (error) {
+    res.json(error);
+  }
+
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete a category by its `id` value
+  try {
+    // get the category to be deleted so we can display it after it
+    // gets deleted
+    const deletedCategory = await Category.findByPk(req.params.id);
+    await Category.destroy({
+      where: {
+        id: req.params.id,
+      },
+    })
+    res.json(deletedCategory);
+  } catch (error) {
+    res.json(error);
+  }
 });
 
 module.exports = router;
