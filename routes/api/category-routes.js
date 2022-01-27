@@ -16,10 +16,10 @@ router.get('/', async (req, res) => {
       ],
     })
     // display categories
-    res.json(categories);
+    res.status(200).json(categories);
   } catch (error) {
     // display errors if any
-    res.json(error);
+    res.status(400).json(error);
   }
 });
 
@@ -41,10 +41,10 @@ router.get('/:id', async (req, res) => {
       }
     );
     // display category
-    res.json(category);
+    res.status(200).json(category);
   } catch (error) {
     // display errors if any
-    res.json(error);
+    res.status(400).json(error);
   }
 });
 
@@ -58,16 +58,16 @@ router.post('/', async (req, res) => {
       category_name
     });
     // display newly created category 
-    res.json(newCategory);
+    res.status(200).json(newCategory);
   } catch (error) {
     // display errors if any
-    res.json(error);
+    res.status(400).json(error);
   }
 });
 
 router.put('/:id', async (req, res) => {
   // update a category by its `id` value
-  // get category_name to be updated
+  // get new category name
   const { category_name } = req.body;
 
   try {
@@ -83,10 +83,10 @@ router.put('/:id', async (req, res) => {
     // get the updated category by it's primary key
     const category = await Category.findByPk(req.params.id);
     // display updated category
-    res.json(category);
+    res.status(200).json(category);
   } catch (error) {
     // display errors if any
-    res.json(error);
+    res.status(400).json(error);
   }
 
 });
@@ -104,10 +104,10 @@ router.delete('/:id', async (req, res) => {
       },
     });
     // display the deleted category
-    res.json(deletedCategory);
+    res.status(200).json(deletedCategory);
   } catch (error) {
     // display errors if any
-    res.json(error);
+    res.status(400).json(error);
   }
 });
 

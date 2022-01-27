@@ -20,9 +20,9 @@ router.get('/', async (req, res) => {
         }
       ],
     })
-  res.json(products);
+    res.status(200).json(products);
   } catch (error) {
-    res.json(error);
+    res.status(400).json(error);
   }
 });
 
@@ -33,7 +33,7 @@ router.get('/:id', async (req, res) => {
   try {
     const product = await Product.findByPk(
       // find the product by it's primary key
-      reg.params.id,
+      req.params.id,
       {
         // include the category association
         include: [
@@ -50,10 +50,10 @@ router.get('/:id', async (req, res) => {
       }
     );
     // display product
-    res.json(product);
+    res.status(200).jsonn(product);
   } catch (error) {
     // display errors if any
-    res.json(error);
+    res.status(400).json(error);
   }
 });
 
@@ -125,14 +125,29 @@ router.put('/:id', (req, res) => {
       ]);
     })
     .then((updatedProductTags) => res.json(updatedProductTags))
+    
     .catch((err) => {
       // console.log(err);
       res.status(400).json(err);
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete one product by its `id` value
+  try {
+    // get the product to be deleted so we can display it after it
+    // is deleted
+    const deletedProduct = await Product.findByPk(req.params.id);
+    // delete the selected product
+    await Product.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+   res.status(200).json(deletedProduct);
+  } catch (error) {
+    res.status(400).json(error)
+  }
 });
 
 module.exports = router;
