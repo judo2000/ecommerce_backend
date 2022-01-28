@@ -50,7 +50,7 @@ router.get('/:id', async (req, res) => {
       }
     );
     // display product
-    res.status(200).jsonn(product);
+    res.status(200).json(product);
   } catch (error) {
     // display errors if any
     res.status(400).json(error);
