@@ -50,8 +50,6 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   // create a new category
-  // get category name entered by the user
-  //const { category_name } = req.body;
   try {
     // create new category
     const newCategory = await Category.create(req.body);
@@ -65,9 +63,6 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   // update a category by its `id` value
-  // get new category name
-  //const { category_name } = req.body;
-
   try {
     // update category
     await Category.update(
