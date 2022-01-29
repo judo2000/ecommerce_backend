@@ -27,8 +27,12 @@
   <p align="right">(<a href="#top">back to top</a>)</p>
   
   ## Usage   
+  [Click here to view the demo](https://drive.google.com/file/d/1sgw-VFlXMNbWMfXKUDI901WPqRct0ulO/view?usp=sharing)   
+
   [![Poject Name Screen Shot][project-screenshot1]](https://judo2000.github.io/img/project_screenshot1.png)   
+
   From the command line run the command <code>node server.js</code>  This will allow the user to view, add, edit and delete categoryes, products, and tags using an API client such as Insomnia or Postman.   
+  
   [![Poject Name Screen Shot][project-screenshot2]](https://judo2000.github.io/img/project_screenshot2.png)
   
   <p align="right">(<a href="#top">back to top</a>)</p>
