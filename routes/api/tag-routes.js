@@ -48,12 +48,10 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   // create a new tag
   // get category name entered by the user
-  const { tag_name } = req.body;
+  //const { tag_name } = req.body;
   try {
     // create new category
-    const newTag = await Tag.create({
-      tag_name,
-    });
+    const newTag = await Tag.create(req.body);
     // display newly created category
     res.status(200).json(newTag);
   } catch (error) {
@@ -65,11 +63,10 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   // update a tag's name by its `id` value
   // get new tag name 
-  const { tag_name } = req.body;
+  //const { tag_name } = req.body;
   try {
     // update tag
-    await Tag.update(
-      { tag_name },
+    await Tag.update(req.body,
       { 
         where: {
           id: req.params.id,
